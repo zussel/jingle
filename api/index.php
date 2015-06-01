@@ -8,10 +8,14 @@
 
 require_once dirname(__FILE__) . '/vendor/autoload.php';
 
+require_once dirname(__FILE__) . '/mpd/MPD.php';
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Slim\Slim;
 use RedBeanPHP\Facade as R;
+
+
+$mpd = new mpd('localhost', 6600);
 
 R::setup('sqlite:/home/sascha/.config/beets/music.blb');
 
@@ -24,6 +28,16 @@ $app->contentType('application/json; charset=utf-8');
 date_default_timezone_set('Europe/Berlin');
 $log = new Logger('name');
 $log->pushHandler(new StreamHandler(dirname(__FILE__) . '/log/beets.log', Logger::WARNING));
+
+$app->get('/status', function() use ($app, $mpd) {
+    $status = $mpd->GetStatus();
+    echo json_encode($status);
+});
+
+$app->get('/test/query', function() use ($app, $mpd) {
+    $result = $mpd->Search(MPD_SEARCH_ALBUM, "on");
+    echo json_encode($result);
+});
 
 $app->group('/albums', function () use ($app) {
 
