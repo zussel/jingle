@@ -1,4 +1,4 @@
-angular.module('beets').controller('AlbumCtrl', ['$scope', 'Albums', function($scope, Albums) {
+angular.module('jingle').controller('AlbumCtrl', function($scope, Albums) {
     $scope.filter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
     $scope.fields = {
@@ -38,4 +38,4 @@ angular.module('beets').controller('AlbumCtrl', ['$scope', 'Albums', function($s
     };
 
     $scope.all();
-}]);
+});

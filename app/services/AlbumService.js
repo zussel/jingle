@@ -1,4 +1,4 @@
-angular.module('beets').factory("Albums", ['$resource', function ($resource) {
+angular.module('jingle').factory("Albums", function ($resource) {
     return $resource("api/albums/:id", { id: "@id" }, {
         "update": {
             method: "PUT"
@@ -9,4 +9,4 @@ angular.module('beets').factory("Albums", ['$resource', function ($resource) {
             isArray: true
         }
     });
-}]);
+});

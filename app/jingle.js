@@ -1,1 +1,1 @@
-angular.module('beets', ['ngResource', 'angular.filter']);
+angular.module('jingle', ['ngResource', 'ngRoute', 'angular.filter']);

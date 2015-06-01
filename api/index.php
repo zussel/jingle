@@ -38,6 +38,15 @@ $app->group('/albums', function () use ($app) {
         $albums = R::find('albums', $field.' LIKE ?', [ $query. '%' ]);
         echo json_encode(R::exportAll($albums));
     });
+
+    $app->get('/:id', function ($id) use ($app) {
+        $album = R::load('albums', $id);
+
+        $items = R::find('items', 'album_id=? ORDER BY track asc', [$id]);
+        $album->tracks = $items;
+        $json = json_encode($album->export());
+        echo $json;
+    });
 });
 
 $app->run();
