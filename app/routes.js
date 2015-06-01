@@ -8,7 +8,9 @@ angular.module('jingle').config(function ($routeProvider) {
 
     $routeProvider
         .when('/', {
-            redirectTo: '/album'
+            templateUrl: 'app/partials/dashboard.html',
+            controller: 'DashboardCtrl'
+            //redirectTo: '/album'
         })
         .when('/album', {
             templateUrl: 'app/partials/albums.html',
