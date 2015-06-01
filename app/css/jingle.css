@@ -1,0 +1,21 @@
+body {
+    padding-top: 50px;
+}
+
+.thin {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+@media (min-width: 768px) {
+    .navbar-form .input-group .input-group-addon {
+        padding: 6px 10px;
+    }
+}
+
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+}

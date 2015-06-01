@@ -1,0 +1,34 @@
+{
+  "name": "beets",
+  "version": "0.1.0",
+  "authors": [
+    "(Sascha Kuehl <sascha.kuehl@gmx.net>)"
+  ],
+  "description": "a beets and mpd based frontend",
+  "main": "index.html",
+  "keywords": [
+    "mpd",
+    "beets",
+    "music",
+    "mp3",
+    "angular",
+    "php"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/vendor",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular": "~1.4.0",
+    "angular-resource": "~1.4.0",
+    "bootstrap": "~3.3.4",
+    "bootswatch-dist": "yeti",
+    "lodash": "~3.9.3",
+    "angular-filter": "~0.5.4"
+  }
+}
