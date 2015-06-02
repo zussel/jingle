@@ -35,7 +35,8 @@ $app->get('/status', function() use ($app, $mpd) {
 });
 
 $app->get('/test/query', function() use ($app, $mpd) {
-    $result = $mpd->Search(MPD_SEARCH_ALBUM, "on");
+    $result = $mpd->SendCommand('list album');
+//    $result = $mpd->Search(MPD_SEARCH_ALBUM, "on");
     echo json_encode($result);
 });
 
