@@ -1,4 +1,4 @@
-angular.module('jingle').controller('AlbumCtrl', function($scope, Albums) {
+angular.module('jingle').controller('AlbumCtrl', function($scope, $routeParams, Albums) {
     $scope.filter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
     $scope.fields = {
@@ -37,5 +37,10 @@ angular.module('jingle').controller('AlbumCtrl', function($scope, Albums) {
         });
     };
 
-    $scope.all();
+
+    if (angular.isDefined($routeParams.query)) {
+        $scope.query($routeParams.query);
+    } else {
+        $scope.all();
+    }
 });

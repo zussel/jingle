@@ -10,9 +10,9 @@ angular.module('jingle').config(function ($routeProvider) {
         .when('/', {
             templateUrl: 'app/partials/dashboard.html',
             controller: 'DashboardCtrl'
-            //redirectTo: '/album'
+            //redirectTo: '/album/query'
         })
-        .when('/album', {
+        .when('/album/query/:query?', {
             templateUrl: 'app/partials/albums.html',
             controller: 'AlbumCtrl'
         })
