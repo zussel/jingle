@@ -248,8 +248,8 @@ class mpd {
      * Sends a generic command to the MPD server. Several command constants are pre-defined for
      * use (see MPD_CMD_* constant definitions above).
      */
-    function SendCommand($cmdStr,$arg1 = "",$arg2 = "") {
-        addLog("mpd->SendCommand() / cmd: ".$cmdStr.", args: ".$arg1." ".$arg2 );
+    function SendCommand($cmdStr,$arg1 = "",$arg2 = "", $arg3="", $arg4="") {
+        addLog("mpd->SendCommand() / cmd: ".$cmdStr.", args: ".$arg1." ".$arg2." ".$arg3." ".$arg4 );
 
         // Clear out the error String
         $this->errStr = NULL;
@@ -266,6 +266,8 @@ class mpd {
 
             if (strlen($arg1) > 0) $cmdStr .= " \"$arg1\"";
             if (strlen($arg2) > 0) $cmdStr .= " \"$arg2\"";
+            if (strlen($arg3) > 0) $cmdStr .= " \"$arg3\"";
+            if (strlen($arg4) > 0) $cmdStr .= " \"$arg4\"";
             fputs($this->mpd_sock,"$cmdStr\n");
             while(!feof($this->mpd_sock)) {
                 $response = fgets($this->mpd_sock,1024);
@@ -758,7 +760,7 @@ class mpd {
      * The find <string> is a case-insensitive locator string. Anything that exactly matches
      * <string> will be returned in the results.
      */
-    function Find($type,$string) {
+    function Find($type,$string,$start=null,$end=null) {
         if ( $this->debugging ) echo "mpd->Find()\n";
         if ( $type != MPD_SEARCH_ARTIST and
             $type != MPD_SEARCH_ALBUM and
@@ -766,7 +768,13 @@ class mpd {
             $this->errStr = "mpd->Find(): invalid find type";
             return NULL;
         } else {
-            if ( is_null($resp = $this->SendCommand(MPD_CMD_FIND,$type,$string)))	return NULL;
+            $window="";
+            $range="";
+            if (!is_null($start) && is_numeric($start) && !is_null($end) && is_numeric($end)) {
+                $window = "window";
+                $range = $start.":".$end;
+            }
+            if ( is_null($resp = $this->SendCommand(MPD_CMD_SEARCH,$type,$string,$window,$range)))	return NULL;
             $searchlist = $this->_parseFileListResponse($resp);
         }
         if ( $this->debugging ) echo "mpd->Find() / return ".print_r($searchlist)."\n";
@@ -828,7 +836,7 @@ class mpd {
         $alCounter = -1;
         while ( $alLine ) {
             list ( $element, $value ) = explode(": ",$alLine);
-            if ( $element == "Album" ) {
+            if ( $element == "Album" && $value != "") {
                 $alCounter++;
                 $alName = $value;
                 $alArray[$alCounter] = $alName;

@@ -35,8 +35,14 @@ $app->get('/status', function() use ($app, $mpd) {
 });
 
 $app->get('/test/query', function() use ($app, $mpd) {
-    $result = $mpd->SendCommand('list album');
-//    $result = $mpd->Search(MPD_SEARCH_ALBUM, "on");
+    $result = array();
+    $albums = $mpd->GetAlbums();
+    foreach($albums as $album) {
+        $infos = $mpd->Find(MPD_SEARCH_ALBUM, "night", 0, 1);
+        if (!is_null($infos['files'])) {
+            $result = array_merge($result, $infos['files']);
+        }
+    }
     echo json_encode($result);
 });
 
